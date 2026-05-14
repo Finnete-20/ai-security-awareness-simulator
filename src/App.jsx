@@ -1,40 +1,33 @@
 import { useState } from "react";
 import axios from "axios";
 
-const API_URL = "https://phishingdetector-backend.onrender.com";
-
 export default function App() {
   const [message, setMessage] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-const analyzeMessage = async () => {
-  setLoading(true);
-  setResult(null);
+  const analyzeMessage = async () => {
+    setLoading(true);
+    setResult(null);
 
-  try {
-    const res = await axios.post(
-      `${API_URL}/analyze`,
-      { message: message },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    try {
+      const res = await axios.post(
+        "https://phishingdetector-backend.onrender.com/analyze",
+        { message }
+      );
 
-    setResult(res.data);
-  } catch (error) {
-    console.log("Backend error:", error);
+      setResult(res.data);
+    } catch (error) {
+      console.log("Backend error:", error);
 
-    setResult({
-      error: "Error connecting to backend",
-      details: error.message,
-    });
-  }
+      setResult({
+        error: "Error connecting to backend",
+        details: error.message,
+      });
+    }
 
-  setLoading(false);
-};
+    setLoading(false);
+  };
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial" }}>
@@ -57,11 +50,17 @@ const analyzeMessage = async () => {
       {loading && <p>Analyzing...</p>}
 
       {result && (
-        <pre style={{ background: "#eee", padding: "10px", marginTop: "10px" }}>
+        <pre
+          style={{
+            background: "#eee",
+            padding: "10px",
+            marginTop: "10px",
+            whiteSpace: "pre-wrap",
+          }}
+        >
           {JSON.stringify(result, null, 2)}
         </pre>
       )}
     </div>
   );
 }
-
