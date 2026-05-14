@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+const API_URL = "https://phishingdetector-backend.onrender.com";
+
 export default function App() {
   const [message, setMessage] = useState("");
   const [result, setResult] = useState(null);
@@ -11,16 +13,18 @@ export default function App() {
     setResult(null);
 
     try {
-      const res = await axios.post(
-        "https://phishingdetector-backend.onrender.com/analyze",
-        {
-          message: message,
-        }
-      );
+      const res = await axios.post(`${API_URL}/analyze`, {
+        message: message,
+      });
 
       setResult(res.data);
     } catch (error) {
-      setResult({ error: "Error connecting to backend" });
+      console.log("Backend error:", error);
+
+      setResult({
+        error: "Error connecting to backend",
+        details: error.message,
+      });
     }
 
     setLoading(false);
