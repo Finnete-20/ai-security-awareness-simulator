@@ -8,27 +8,33 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const analyzeMessage = async () => {
-    setLoading(true);
-    setResult(null);
+const analyzeMessage = async () => {
+  setLoading(true);
+  setResult(null);
 
-    try {
-      const res = await axios.post(`${API_URL}/analyze`, {
-        message: message,
-      });
+  try {
+    const res = await axios.post(
+      `${API_URL}/analyze`,
+      { message: message },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-      setResult(res.data);
-    } catch (error) {
-      console.log("Backend error:", error);
+    setResult(res.data);
+  } catch (error) {
+    console.log("Backend error:", error);
 
-      setResult({
-        error: "Error connecting to backend",
-        details: error.message,
-      });
-    }
+    setResult({
+      error: "Error connecting to backend",
+      details: error.message,
+    });
+  }
 
-    setLoading(false);
-  };
+  setLoading(false);
+};
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial" }}>
