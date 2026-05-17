@@ -15,7 +15,7 @@ Expectations of the analysis are:
   Risk score on a range 1-10,
   Attack type eg. Credential harvest
   Phishing indicators eg. Suspicious sender email domain not matching official institution(gvsu)
-  Social engineering_tactics eg. Impersonation of an official enrollment form to entice clicks
+  Social engineering tactics eg. Impersonation of an official enrollment form to entice clicks
   Recommended_action like Do not click the link
 
 # Goal of the project 
